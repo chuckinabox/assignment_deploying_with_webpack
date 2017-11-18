@@ -3,17 +3,33 @@ import React, { Component } from "react";
 class NumberContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { apidata: "", isFetching: false };
+    this.state = {
+      apidata: "Enter Number for Trivia/Math/Year fact",
+      isFetching: false,
+      number: "",
+      type: "trivia"
+    };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ isFetching: true });
-    let valueTarget = event.currentTarget.value;
-    if (!valueTarget.length) {
-      valueTarget = "random";
+    this.setState({
+      [event.currentTarget.name]: event.currentTarget.value,
+      isFetching: true
+    });
+    let valueNumber;
+    let valueType;
+    if (event.currentTarget.name === "number") {
+      valueNumber = event.currentTarget.value;
+      valueType = this.state.type;
+    } else {
+      valueNumber = this.state.number;
+      valueType = event.currentTarget.value;
     }
-    fetch(`http://numbersapi.com/${valueTarget}/math`)
+    if (!valueNumber.length) {
+      valueNumber = "random";
+    }
+    fetch(`http://numbersapi.com/${valueNumber}/${valueType}`)
       .then(response => {
         if (response.ok) {
           return response.text();
@@ -30,8 +46,8 @@ class NumberContainer extends Component {
     return (
       <div>
         <p>{this.state.isFetching ? "Loading..." : this.state.apidata}</p>
-        <input type="number" onChange={this.handleChange} />
-        <select>
+        <input type="number" name="number" onChange={this.handleChange} />
+        <select name="type" onChange={this.handleChange}>
           <option value="trivia">Trivia</option>
           <option value="math">Math</option>
           <option value="year">Year</option>

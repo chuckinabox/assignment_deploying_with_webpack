@@ -9,6 +9,10 @@ class App extends Component {
     return (
       <Router>
         <div>
+          <h3>
+            Number facts (<small>From numbersapi.com</small>)
+          </h3>
+          <br />
           <Link to="/">Home</Link> <Link to="/number">Numbers</Link>{" "}
           <Link to="/date">Dates</Link>
           <Switch>

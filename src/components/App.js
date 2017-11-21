@@ -32,7 +32,7 @@ class App extends Component {
             <Route exact path="/date" component={DateContainer} />
             <Route exact path="/number" component={NumberContainer} />
             <Route exact path="/" component={HomeContainer} />
-            <Route path="/" render={() => <p>Error: No Directory</p>} />
+            <Route render={() => <p>Error: No Directory</p>} />
           </Switch>
         </div>
       </Router>
